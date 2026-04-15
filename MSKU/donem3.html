@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>MSKÜ Tıp – Dönem III Not Hesaplama</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    :root{--primary:#5c374c;--primary-dark:#3e2234;--primary-light:#7a4f66;--accent:#c9748f;--accent-light:#f0d0da;--bg:#fdf6f8;--text:#1a1a1a;--table-bg:#fff;--border:#ddc8d2;--section-bg:#f7eef2;--input-highlight:#fce8ef;--result-bg:#f7eef2;--progress-red:#dc2626;--progress-yellow:#f59e0b;--progress-green:#16a34a;}
+    body.dark{--bg:#1a0f14;--text:#f0e0e8;--table-bg:#2a1820;--border:#5c374c;--section-bg:#2a1820;--input-highlight:#3d2030;--result-bg:#2a1820;--accent-light:#3d2030;}
+    *{box-sizing:border-box;}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);margin:0 auto;padding:20px;max-width:640px;transition:background 0.3s,color 0.3s;}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+    .topbar a{font-size:13px;color:var(--accent);text-decoration:none;}
+    h1{font-family:'Montserrat',sans-serif;font-size:22px;text-align:center;color:var(--primary);margin:0 0 4px 0;}
+    body.dark h1{color:var(--accent);}
+    .subtitle{text-align:center;font-size:13px;color:#888;margin-bottom:20px;}
+    .toggle{border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:5px;cursor:pointer;background:transparent;font-size:13px;}
+    .section-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;color:var(--primary);margin:20px 0 8px;border-left:4px solid var(--accent);padding-left:10px;}
+    body.dark .section-title{color:var(--accent);}
+    .table-wrap{border-radius:8px;border:1px solid var(--border);overflow:hidden;}
+    table{border-collapse:collapse;width:100%;}
+    th,td{border-bottom:1px solid var(--border);padding:9px 10px;font-size:14px;}
+    th{background:var(--primary);color:#fff;font-size:13px;text-align:left;}
+    td{background:var(--table-bg);}
+    tr:last-child td{border-bottom:none;}
+    td input[type="number"]{width:80px;padding:6px 4px;text-align:center;border:1px solid var(--accent);border-radius:4px;background:var(--input-highlight);color:var(--text);font-size:14px;}
+    td input[type="number"]:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px rgba(92,55,76,0.2);}
+    .akts-badge{display:inline-block;background:var(--accent-light);color:var(--primary-dark);border-radius:4px;padding:1px 6px;font-size:12px;font-weight:600;margin-left:4px;}
+    body.dark .akts-badge{background:#3d2030;color:var(--accent);}
+    .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .card{background:var(--section-bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+    .card label{font-size:11px;color:#888;font-weight:600;text-transform:uppercase;display:block;margin-bottom:4px;}
+    .card .val{font-size:22px;font-weight:700;color:var(--primary);}
+    body.dark .card .val{color:var(--accent);}
+    .card.full{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;}
+    .card.full .val{font-size:28px;}
+    .input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .input-box{background:var(--section-bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+    .input-box label{display:block;font-size:11px;color:#888;font-weight:600;text-transform:uppercase;margin-bottom:6px;}
+    .input-box input{width:100%;padding:8px;border:1px solid var(--accent);border-radius:5px;background:var(--input-highlight);color:var(--text);font-size:16px;font-weight:700;text-align:center;}
+    .input-box .hint{font-size:11px;color:#888;margin-top:4px;}
+    .info-box{background:var(--accent-light);border:1px solid var(--accent);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--primary-dark);margin-top:4px;}
+    body.dark .info-box{background:#3d2030;color:var(--accent);}
+    .result-box{margin-top:20px;padding:18px;border-radius:12px;border:1px solid var(--border);background:var(--result-bg);text-align:center;opacity:0;visibility:hidden;transform:translateY(8px);transition:all 0.4s ease;}
+    .result-box.show{opacity:1;visibility:visible;transform:translateY(0);}
+    .res-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+    .res-card{background:var(--table-bg);border:1px solid var(--border);border-radius:8px;padding:10px;}
+    .res-card .rl{font-size:11px;color:#888;font-weight:600;text-transform:uppercase;}
+    .res-card .rv{font-size:19px;font-weight:700;color:var(--primary);}
+    body.dark .res-card .rv{color:var(--accent);}
+    .res-card.big .rv{font-size:26px;color:var(--accent);}
+    .progress-wrap{background:#ddd;border-radius:10px;height:24px;overflow:hidden;border:1px solid var(--border);margin-top:10px;}
+    body.dark .progress-wrap{background:#333;}
+    .progress-bar{height:100%;line-height:24px;text-align:center;color:#fff;font-weight:700;font-size:13px;width:0%;transition:width 0.8s cubic-bezier(0.4,0,0.2,1),background-color 0.5s;}
+    .status{margin-top:12px;font-size:15px;font-weight:600;}
+    .pass{color:var(--progress-green);}
+    .fail{color:var(--progress-red);}
+    .note{font-size:12px;color:#888;margin-top:14px;line-height:1.5;text-align:center;}
+    .btn-row{display:flex;gap:8px;margin-top:14px;}
+    .btn-row button{flex:1;padding:9px;font-size:13px;border-radius:6px;border:none;cursor:pointer;color:#fff;background:linear-gradient(to bottom,var(--primary-light),var(--primary-dark));font-weight:600;}
+    .btn-main{width:100%;padding:13px;font-size:16px;font-weight:700;margin-top:16px;background:linear-gradient(to bottom,var(--primary-light),var(--primary-dark));color:#fff;border:none;border-radius:8px;cursor:pointer;box-shadow:0 4px 6px rgba(0,0,0,0.15);}
+    .btn-main:hover{box-shadow:0 6px 10px rgba(0,0,0,0.2);}
+    .btn-main:active{transform:translateY(2px);}
+</style>
+</head>
+<body>
+<div class="topbar">
+    <a href="index.html"><i class="fas fa-arrow-left"></i> Ana Sayfa</a>
+    <button class="toggle" id="themeToggle"><i class="fas fa-moon"></i> Karanlık</button>
+</div>
+<h1>MSKÜ Tıp Fakültesi</h1>
+<p class="subtitle">Dönem III – Not Hesaplama</p>
+
+<div class="section-title"><i class="fas fa-book-open" style="margin-right:6px"></i>Ders Kurulu Notları</div>
+<div class="table-wrap">
+    <table>
+        <thead><tr><th>Ders Kurulu</th><th>AKTS</th><th>Notunuz</th></tr></thead>
+        <tbody>
+            <tr><td>1. Ders Kurulu</td><td><span class="akts-badge">10</span></td><td><input type="number" id="dk1" min="0" max="100" step="any" placeholder="–"></td></tr>
+            <tr><td>2. Ders Kurulu</td><td><span class="akts-badge">9</span></td><td><input type="number" id="dk2" min="0" max="100" step="any" placeholder="–"></td></tr>
+            <tr><td>3. Ders Kurulu</td><td><span class="akts-badge">9</span></td><td><input type="number" id="dk3" min="0" max="100" step="any" placeholder="–"></td></tr>
+            <tr><td>4. Ders Kurulu</td><td><span class="akts-badge">12</span></td><td><input type="number" id="dk4" min="0" max="100" step="any" placeholder="–"></td></tr>
+            <tr><td>5. Ders Kurulu</td><td><span class="akts-badge">9</span></td><td><input type="number" id="dk5" min="0" max="100" step="any" placeholder="–"></td></tr>
+            <tr><td>6. Ders Kurulu</td><td><span class="akts-badge">11</span></td><td><input type="number" id="dk6" min="0" max="100" step="any" placeholder="–"></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="section-title"><i class="fas fa-chart-bar" style="margin-right:6px"></i>Tıp Dersleri Ara Sınav Ortalaması</div>
+<div class="card-grid">
+    <div class="card full">
+        <div><label>Ara Sınav Not Ortalaması <span style="font-size:10px;color:#aaa;">(AKTS ağırlıklı, ÷60)</span></label></div>
+        <div class="val" id="ara_ort">–</div>
+    </div>
+</div>
+
+<div class="section-title"><i class="fas fa-pen-alt" style="margin-right:6px"></i>Dönem Sonu Sınavı</div>
+<div class="input-grid" style="grid-template-columns:1fr;">
+    <div class="input-box" style="display:flex;justify-content:space-between;align-items:center;">
+        <div><label>Dönem Sonu Sınav Notu</label><div class="hint">Boş bırakılırsa finalsiz geçiş hesaplanır</div></div>
+        <input type="number" id="final" min="0" max="100" step="any" placeholder="–" style="width:90px;">
+    </div>
+</div>
+
+<div class="section-title"><i class="fas fa-graduation-cap" style="margin-right:6px"></i>Dönem III Tıp Dersleri Notu = Ağırlıklı Not Ortalaması</div>
+<div class="card-grid">
+    <div class="card full">
+        <div><label id="tip_label">Ara×0.60 + Final×0.40</label></div>
+        <div class="val" id="tip_notu">–</div>
+    </div>
+</div>
+<div class="info-box"><i class="fas fa-info-circle"></i> Dönem III'de sadece Tıp Dersleri olduğu için <strong>Tıp Dersleri Notu = Ağırlıklı Not Ortalaması</strong>.</div>
+
+<div class="btn-row">
+    <button id="saveBtn"><i class="fas fa-save"></i> Kaydet</button>
+    <button id="loadBtn"><i class="fas fa-folder-open"></i> Yükle</button>
+    <button id="resetBtn"><i class="fas fa-trash-alt"></i> Sıfırla</button>
+</div>
+<button class="btn-main" id="calcBtn"><i class="fas fa-calculator"></i> Hesapla</button>
+
+<div class="result-box" id="resultBox">
+    <div class="res-grid">
+        <div class="res-card"><div class="rl">Ara Sınav Ort.</div><div class="rv" id="r_ara">–</div></div>
+        <div class="res-card"><div class="rl">Dönem Sonu</div><div class="rv" id="r_final">–</div></div>
+        <div class="res-card big"><div class="rl">Tıp / Ağırlıklı Ort.</div><div class="rv" id="r_agno">–</div></div>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="status" id="statusText"></div>
+</div>
+<p class="note"><i class="fas fa-info-circle"></i> Dönem III'de diğer ders yoktur; Tıp Dersleri Notu doğrudan Ağırlıklı Not Ortalaması'dır.</p>
+
+<script>
+    const ALL_IDS = ['dk1','dk2','dk3','dk4','dk5','dk6','final'];
+    document.querySelectorAll('input[type="number"]').forEach(el => {
+        el.addEventListener('input', () => { const val = parseFloat(el.value); if (!isNaN(val)) { if (val < 0) el.value = 0; if (val > 100) el.value = 100; } });
+    });
+    function v(id) { const x = parseFloat(document.getElementById(id).value); return isNaN(x) ? null : x; }
+    function fmt(x) { return x === null ? '–' : x.toFixed(2); }
+    const DK_AKTS = [10,9,9,12,9,11]; // toplam 60
+    const DK_IDS  = ['dk1','dk2','dk3','dk4','dk5','dk6'];
+
+    function recalc() {
+        let num = 0;
+        DK_IDS.forEach((id,i) => { num += (v(id) ?? 0) * DK_AKTS[i]; });
+        const anyDk = DK_IDS.some(id => v(id) !== null);
+        const araOrt = anyDk ? num / 60 : null;
+        document.getElementById('ara_ort').textContent = fmt(araOrt);
+        const final = v('final');
+        let tipNotu = null;
+        if (araOrt !== null) {
+            if (final !== null) { tipNotu = araOrt * 0.60 + final * 0.40; document.getElementById('tip_label').textContent = 'Ara×0.60 + Final×0.40'; }
+            else { tipNotu = araOrt; document.getElementById('tip_label').textContent = 'Finalsiz geçiş (= Ara Sınav Ortalaması)'; }
+        }
+        document.getElementById('tip_notu').textContent = fmt(tipNotu);
+        return { araOrt, final, tipNotu };
+    }
+
+    ALL_IDS.forEach(id => document.getElementById(id).addEventListener('input', recalc));
+
+    document.getElementById('calcBtn').addEventListener('click', () => {
+        const { araOrt, final, tipNotu } = recalc();
+        document.getElementById('resultBox').classList.add('show');
+        document.getElementById('r_ara').textContent   = fmt(araOrt);
+        document.getElementById('r_final').textContent = fmt(v('final'));
+        document.getElementById('r_agno').textContent  = fmt(tipNotu);
+        const pb = document.getElementById('progressBar'), st = document.getElementById('statusText');
+        if (tipNotu !== null) {
+            const pct = Math.min((tipNotu / 60) * 100, 100);
+            pb.style.width = pct + '%'; pb.textContent = tipNotu.toFixed(1);
+            pb.style.backgroundColor = pct < 50 ? 'var(--progress-red)' : pct < 100 ? 'var(--progress-yellow)' : 'var(--progress-green)';
+            st.innerHTML = tipNotu >= 60 ? `<span class="pass"><i class="fas fa-check-circle"></i> Tebrikler! Dönem III Ağırlıklı Ortalamanız: ${tipNotu.toFixed(2)}</span>` : `<span class="fail"><i class="fas fa-times-circle"></i> Dönem III Ağırlıklı Ortalamanız ${tipNotu.toFixed(2)} (Geçme: 60)</span>`;
+        } else { pb.style.width = '0%'; pb.textContent = '–'; st.innerHTML = `<span style="color:gray"><i class="fas fa-hourglass-half"></i> Not girişi yapın.</span>`; }
+    });
+
+    const tt = document.getElementById('themeToggle');
+    tt.addEventListener('click', () => { document.body.classList.toggle('dark'); const d = document.body.classList.contains('dark'); tt.innerHTML = d ? '<i class="fas fa-sun"></i> Aydınlık' : '<i class="fas fa-moon"></i> Karanlık'; localStorage.setItem('msku_theme', d ? 'dark' : 'light'); });
+    if (localStorage.getItem('msku_theme') === 'dark') { document.body.classList.add('dark'); tt.innerHTML = '<i class="fas fa-sun"></i> Aydınlık'; }
+
+    document.getElementById('saveBtn').addEventListener('click', () => { const s = {}; ALL_IDS.forEach(id => s[id] = document.getElementById(id).value); localStorage.setItem('msku_d3', JSON.stringify(s)); alert('Kaydedildi!'); });
+    document.getElementById('loadBtn').addEventListener('click', () => { const s = JSON.parse(localStorage.getItem('msku_d3')); if (s) { ALL_IDS.forEach(id => { if (s[id] !== undefined) document.getElementById(id).value = s[id]; }); recalc(); document.getElementById('calcBtn').click(); } else alert('Kayıtlı veri bulunamadı.'); });
+    document.getElementById('resetBtn').addEventListener('click', () => { ALL_IDS.forEach(id => document.getElementById(id).value = ''); recalc(); document.getElementById('resultBox').classList.remove('show'); });
+</script>
+</body>
+</html>
