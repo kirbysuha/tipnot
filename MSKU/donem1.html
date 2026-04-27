@@ -124,56 +124,15 @@
     </table>
 </div>
 
-<!-- Ara Sınav Ortalaması -->
-<div class="section-title"><i class="fas fa-chart-bar" style="margin-right:6px"></i>Tıp Dersleri Ara Sınav Ortalaması</div>
-<div class="card-grid">
-    <div class="card full">
-        <div><label>Ara Sınav Not Ortalaması <span style="font-size:10px;color:#aaa;">(AKTS ağırlıklı, ÷38)</span></label></div>
-        <div class="val" id="ara_ort">–</div>
-    </div>
-</div>
-
 <!-- Final -->
 <div class="section-title"><i class="fas fa-pen-alt" style="margin-right:6px"></i>Dönem Sonu Sınavı</div>
 <div class="input-grid" style="grid-template-columns:1fr;">
     <div class="input-box" style="display:flex;justify-content:space-between;align-items:center;">
         <div>
             <label>Dönem Sonu Sınav Notu</label>
-            <div class="hint">Boş bırakılırsa finalsiz geçiş hesaplanır</div>
+            <div class="hint">Ara ort. ≥ 85 ise otomatik devre dışı kalır</div>
         </div>
         <input type="number" id="final" min="0" max="100" step="any" placeholder="–" style="width:90px;">
-    </div>
-</div>
-
-<!-- Tıp Dersleri Notu -->
-<div class="section-title"><i class="fas fa-graduation-cap" style="margin-right:6px"></i>Dönem I Tıp Dersleri Notu</div>
-<div class="card-grid">
-    <div class="card full">
-        <div><label id="tip_label">Ara×0.60 + Final×0.40</label></div>
-        <div class="val" id="tip_notu">–</div>
-    </div>
-</div>
-
-<!-- Diğer Dersler -->
-<div class="section-title"><i class="fas fa-list" style="margin-right:6px"></i>Diğer Dersler</div>
-<div class="input-grid">
-    <div class="input-box"><label>Türk Dili I <span style="color:var(--accent)">(2 AKTS)</span></label><input type="number" id="td1" min="0" max="100" step="any" placeholder="–"></div>
-    <div class="input-box"><label>Türk Dili II <span style="color:var(--accent)">(2 AKTS)</span></label><input type="number" id="td2" min="0" max="100" step="any" placeholder="–"></div>
-    <div class="input-box"><label>Atatürk İlk. I <span style="color:var(--accent)">(2 AKTS)</span></label><input type="number" id="ai1" min="0" max="100" step="any" placeholder="–"></div>
-    <div class="input-box"><label>Atatürk İlk. II <span style="color:var(--accent)">(2 AKTS)</span></label><input type="number" id="ai2" min="0" max="100" step="any" placeholder="–"></div>
-    <div class="input-box"><label>İngilizce I <span style="color:var(--accent)">(3 AKTS)</span></label><input type="number" id="ing1" min="0" max="100" step="any" placeholder="–"></div>
-    <div class="input-box"><label>İngilizce II <span style="color:var(--accent)">(3 AKTS)</span></label><input type="number" id="ing2" min="0" max="100" step="any" placeholder="–"></div>
-    <div class="input-box"><label>Temel Bilgi Tek. <span style="color:var(--accent)">(3 AKTS)</span></label><input type="number" id="tbt" min="0" max="100" step="any" placeholder="–"></div>
-    <div class="input-box"><label>Seçmeli Ders <span style="color:var(--accent)">(3 AKTS)</span></label><input type="number" id="sec" min="0" max="100" step="any" placeholder="–"></div>
-    <div class="input-box"><label>İş Sağlığı ve Güv. <span style="color:var(--accent)">(2 AKTS)</span></label><input type="number" id="isg" min="0" max="100" step="any" placeholder="–"></div>
-</div>
-
-<!-- Ağırlıklı Ortalama -->
-<div class="section-title"><i class="fas fa-star" style="margin-right:6px"></i>Ağırlıklı Not Ortalaması</div>
-<div class="card-grid">
-    <div class="card full">
-        <div><label>Dönem I Ağırlıklı Not Ortalaması <span style="font-size:10px;color:#aaa;">(Toplam AKTS: 60)</span></label></div>
-        <div class="val" id="agno">–</div>
     </div>
 </div>
 
@@ -185,10 +144,9 @@
 <button class="btn-main" id="calcBtn"><i class="fas fa-calculator"></i> Hesapla</button>
 
 <div class="result-box" id="resultBox">
-    <div class="res-grid">
+    <div class="res-grid" style="grid-template-columns:1fr 1fr;">
         <div class="res-card"><div class="rl">Ara Sınav Ort.</div><div class="rv" id="r_ara">–</div></div>
-        <div class="res-card"><div class="rl">Tıp Dersleri Notu</div><div class="rv" id="r_tip">–</div></div>
-        <div class="res-card big"><div class="rl">Ağırlıklı Ort.</div><div class="rv" id="r_agno">–</div></div>
+        <div class="res-card big"><div class="rl">Tıp Dersleri Notu</div><div class="rv" id="r_tip">–</div></div>
     </div>
     <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
     <div class="status" id="statusText"></div>
@@ -197,7 +155,7 @@
 <p class="note"><i class="fas fa-info-circle"></i> Finalsiz geçiş hakkı için dönem sonu sınav notu boş bırakın. Ağırlıklı not ortalaması 60 AKTS üzerinden hesaplanır.</p>
 
 <script>
-    const CLAMP_IDS = ['dk1','dk2','dk3','dk4','final','td1','td2','ai1','ai2','ing1','ing2','tbt','sec','isg'];
+    const CLAMP_IDS = ['dk1','dk2','dk3','dk4','final'];
     document.querySelectorAll('input[type="number"]').forEach(el => {
         el.addEventListener('input', () => {
             const val = parseFloat(el.value);
@@ -212,68 +170,48 @@
     const DK_IDS  = ['dk1','dk2','dk3','dk4'];
 
     function recalc() {
-        // Ara sınav ortalaması: AKTS ağırlıklı
         let num = 0, den = 38;
         DK_IDS.forEach((id, i) => { num += (v(id) ?? 0) * DK_AKTS[i]; });
         const anyDk = DK_IDS.some(id => v(id) !== null);
         const araOrt = anyDk ? num / den : null;
-        document.getElementById('ara_ort').textContent = fmt(araOrt);
 
-        // Tıp dersleri notu
-        const final = v('final');
+        const finalInput = document.getElementById('final');
+        const finalsiz = araOrt !== null && araOrt >= 85;
+        finalInput.disabled = finalsiz;
+        finalInput.placeholder = finalsiz ? 'Finalsiz geçiş' : '–';
+        if (finalsiz) finalInput.value = '';
+
+        const final = finalsiz ? null : v('final');
         let tipNotu = null;
         if (araOrt !== null) {
-            if (final !== null) {
-                tipNotu = araOrt * 0.60 + final * 0.40;
-                document.getElementById('tip_label').textContent = 'Ara×0.60 + Final×0.40';
-            } else {
-                tipNotu = araOrt; // finalsiz geçiş
-                document.getElementById('tip_label').textContent = 'Finalsiz geçiş (= Ara Sınav Ortalaması)';
-            }
+            if (finalsiz) tipNotu = araOrt;
+            else if (final !== null) tipNotu = araOrt * 0.60 + final * 0.40;
         }
-        document.getElementById('tip_notu').textContent = fmt(tipNotu);
 
-        // Ağırlıklı not ortalaması (toplam AKTS: 60)
-        const others = [
-            { id: 'td1', akts: 2 }, { id: 'td2', akts: 2 },
-            { id: 'ai1', akts: 2 }, { id: 'ai2', akts: 2 },
-            { id: 'ing1', akts: 3 }, { id: 'ing2', akts: 3 },
-            { id: 'tbt', akts: 3 }, { id: 'sec', akts: 3 },
-            { id: 'isg', akts: 2 }
-        ];
-        let agnoNum = (tipNotu ?? 0) * 38;
-        others.forEach(o => { agnoNum += (v(o.id) ?? 0) * o.akts; });
-        const anyOther = others.some(o => v(o.id) !== null);
-        const agno = (tipNotu !== null || anyOther) ? agnoNum / 60 : null;
-        document.getElementById('agno').textContent = fmt(agno);
-
-        return { araOrt, tipNotu, agno };
+        return { araOrt, tipNotu };
     }
 
     CLAMP_IDS.forEach(id => document.getElementById(id).addEventListener('input', recalc));
 
     document.getElementById('calcBtn').addEventListener('click', () => {
-        const { araOrt, tipNotu, agno } = recalc();
-        const box = document.getElementById('resultBox');
-        box.classList.add('show');
-        document.getElementById('r_ara').textContent  = fmt(araOrt);
-        document.getElementById('r_tip').textContent  = fmt(tipNotu);
-        document.getElementById('r_agno').textContent = fmt(agno);
+        const { araOrt, tipNotu } = recalc();
+        document.getElementById('resultBox').classList.add('show');
+        document.getElementById('r_ara').textContent = fmt(araOrt);
+        document.getElementById('r_tip').textContent = fmt(tipNotu);
 
         const pb = document.getElementById('progressBar');
         const st = document.getElementById('statusText');
-        const score = agno ?? tipNotu ?? araOrt;
-        if (score !== null) {
-            const pct = Math.min((score / 60) * 100, 100);
+        // Geçme durumu tipNotu'na göre
+        if (tipNotu !== null) {
+            const pct = Math.min((tipNotu / 60) * 100, 100);
             pb.style.width = pct + '%';
-            pb.textContent = score.toFixed(1);
+            pb.textContent = tipNotu.toFixed(2);
             pb.style.backgroundColor = pct < 50 ? 'var(--progress-red)' : pct < 100 ? 'var(--progress-yellow)' : 'var(--progress-green)';
-            if (agno !== null) {
-                if (agno >= 60) st.innerHTML = `<span class="pass"><i class="fas fa-check-circle"></i> Tebrikler! Dönem I Ağırlıklı Ortalamanız: ${agno.toFixed(2)}</span>`;
-                else st.innerHTML = `<span class="fail"><i class="fas fa-times-circle"></i> Dönem I Ağırlıklı Ortalamanız ${agno.toFixed(2)} (Geçme: 60)</span>`;
-            } else {
-                st.innerHTML = `<span style="color:gray"><i class="fas fa-hourglass-half"></i> Tüm notları girerek tam hesaplama yapın.</span>`;
-            }
+            if (tipNotu >= 60) st.innerHTML = `<span class="pass"><i class="fas fa-check-circle"></i> Tebrikler! Tıp Dersleri Notunuz: ${tipNotu.toFixed(2)}</span>`;
+            else st.innerHTML = `<span class="fail"><i class="fas fa-times-circle"></i> Tıp Dersleri Notunuz ${tipNotu.toFixed(2)} — geçmek için ${(60 - tipNotu).toFixed(2)} puan eksik.</span>`;
+        } else if (araOrt !== null) {
+            pb.style.width = '0%'; pb.textContent = '–';
+            st.innerHTML = `<span style="color:gray"><i class="fas fa-hourglass-half"></i> Final notunu girerek sonucu hesaplayın.</span>`;
         } else {
             pb.style.width = '0%'; pb.textContent = '–';
             st.innerHTML = `<span style="color:gray"><i class="fas fa-hourglass-half"></i> Not girişi yapın.</span>`;
