@@ -34,7 +34,7 @@
         position: relative;
     }
     .header-top { display: flex; justify-content: flex-end; margin-bottom: 20px; }
-    .toggle { border: 1px solid rgba(255,255,255,0.35); color: #fff; padding: 6px 12px; border-radius: 5px; cursor: pointer; background: rgba(255,255,255,0.1); font-size: 13px; backdrop-filter: blur(4px); }
+    .toggle { border: 1px solid rgba(255,255,255,0.35); color: #fff; padding: 6px 12px; border-radius: 5px; cursor: pointer; background: rgba(255,255,255,0.1); font-size: 13px; backdrop-filter: blur(4px); transition: background 0.2s; }
     .toggle:hover { background: rgba(255,255,255,0.2); }
 
     .logo-circle {
@@ -66,41 +66,53 @@
     }
     .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .donem-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 28px; }
+    /* Basitleştirilmiş Butonlar */
+    .donem-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
 
-    .donem-card {
+    .simple-btn {
         background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 18px 20px;
+        border-radius: 10px;
+        padding: 18px 24px;
         text-decoration: none;
         color: var(--text);
-        display: flex; align-items: center; justify-content: space-between;
-        transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
-        position: relative;
-        overflow: hidden;
+        font-weight: 600;
+        font-size: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.2s ease;
     }
-    .donem-card::before {
-        content: '';
-        position: absolute; top: 0; left: 0; right: 0; height: 3px;
-        background: linear-gradient(to right, var(--primary), var(--accent));
-        opacity: 0; transition: opacity 0.2s;
+    
+    .simple-btn i {
+        color: var(--accent);
+        font-size: 14px;
+        transition: transform 0.2s ease;
     }
-    .donem-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(92,55,76,0.15); border-color: var(--accent); }
-    .donem-card:hover::before { opacity: 1; }
-    body.dark .donem-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
 
-    .card-body { flex: 1; }
-    .card-number { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 3px; }
-    .card-title { font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: 4px; }
-    .card-desc { font-size: 12px; color: #888; line-height: 1.4; }
+    .simple-btn:hover {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(92,55,76,0.15);
+    }
 
-    .card-arrow { color: var(--border); font-size: 13px; transition: color 0.2s, transform 0.2s; margin-left: 16px; }
-    .donem-card:hover .card-arrow { color: var(--accent); transform: translateX(3px); }
+    .simple-btn:hover i {
+        color: #fff;
+        transform: translateX(4px);
+    }
 
-    .tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; margin-top: 4px; }
-    .tag-kurulu { background: var(--accent-light); color: var(--primary-dark); }
-    body.dark .tag-kurulu { background: #3d2030; color: var(--accent); }
+    body.dark .simple-btn:hover {
+        background: var(--accent);
+        color: var(--bg);
+        border-color: var(--accent);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+    
+    body.dark .simple-btn:hover i {
+        color: var(--bg);
+    }
 
     /* Info box */
     .info-box {
@@ -138,35 +150,21 @@
 
     <div class="section-label"><i class="fas fa-layer-group"></i> Dönem Seçin</div>
 
-    <div class="donem-grid">
-
-        <a class="donem-card" href="donem1.html">
-            <div class="card-body">
-                <div class="card-number">Dönem I</div>
-                <div class="card-title">1. Yıl</div>
-                <div class="card-desc">4 ders kurulu</div>
-            </div>
-            <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+    <div class="donem-list">
+        <a class="simple-btn" href="donem1.html">
+            <span>Dönem I</span>
+            <i class="fas fa-chevron-right"></i>
         </a>
 
-        <a class="donem-card" href="donem2.html">
-            <div class="card-body">
-                <div class="card-number">Dönem II</div>
-                <div class="card-title">2. Yıl</div>
-                <div class="card-desc">5 ders kurulu</div>
-            </div>
-            <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+        <a class="simple-btn" href="donem2.html">
+            <span>Dönem II</span>
+            <i class="fas fa-chevron-right"></i>
         </a>
 
-        <a class="donem-card" href="donem3.html">
-            <div class="card-body">
-                <div class="card-number">Dönem III</div>
-                <div class="card-title">3. Yıl</div>
-                <div class="card-desc">6 ders kurulu</div>
-            </div>
-            <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+        <a class="simple-btn" href="donem3.html">
+            <span>Dönem III</span>
+            <i class="fas fa-chevron-right"></i>
         </a>
-
     </div>
 
     <div class="section-label"><i class="fas fa-info-circle"></i> Nasıl Hesaplanır?</div>
@@ -183,7 +181,6 @@
     </div>
 
     <div class="footer">
-        Muğla Sıtkı Koçman Üniversitesi Tıp Fakültesi · Not Hesaplama Aracı<br>
         <span style="font-size:11px;">~by kirbisuha~</span>
     </div>
 

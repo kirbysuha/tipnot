@@ -91,7 +91,7 @@
     .pass { color: var(--progress-green); }
     .fail { color: var(--progress-red); }
 
-    .note { font-size: 12px; color: #888; margin-top: 14px; line-height: 1.5; text-align: center; }
+    .footer { text-align: center; font-size: 12px; color: #aaa; margin: 16px 0 4px 0; }
 
     /* Buttons */
     .btn-row { display: flex; gap: 8px; margin-top: 14px; }
@@ -110,7 +110,6 @@
 <h1>MSKÜ Tıp Fakültesi</h1>
 <p class="subtitle">Dönem I – Not Hesaplama</p>
 
-<!-- Ders Kurulları -->
 <div class="section-title"><i class="fas fa-book-open" style="margin-right:6px"></i>Ders Kurulu Notları</div>
 <div class="table-wrap">
     <table>
@@ -124,7 +123,6 @@
     </table>
 </div>
 
-<!-- Final -->
 <div class="section-title"><i class="fas fa-pen-alt" style="margin-right:6px"></i>Dönem Sonu Sınavı</div>
 <div class="input-grid" style="grid-template-columns:1fr;">
     <div class="input-box" style="display:flex;justify-content:space-between;align-items:center;">
@@ -143,6 +141,10 @@
 </div>
 <button class="btn-main" id="calcBtn"><i class="fas fa-calculator"></i> Hesapla</button>
 
+<div class="footer">
+    <span style="font-size:11px;">~by kirbisuha~</span>
+</div>
+
 <div class="result-box" id="resultBox">
     <div class="res-grid" style="grid-template-columns:1fr 1fr;">
         <div class="res-card"><div class="rl">Ara Sınav Ort.</div><div class="rv" id="r_ara">–</div></div>
@@ -151,8 +153,6 @@
     <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
     <div class="status" id="statusText"></div>
 </div>
-
-<p class="note"><i class="fas fa-info-circle"></i> Finalsiz geçiş hakkı için dönem sonu sınav notu boş bırakın. Ağırlıklı not ortalaması 60 AKTS üzerinden hesaplanır.</p>
 
 <script>
     const CLAMP_IDS = ['dk1','dk2','dk3','dk4','final'];
